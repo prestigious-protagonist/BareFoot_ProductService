@@ -22,7 +22,7 @@ const startServer = () => {
     app.use("/productService/api", apiv1Router); // All routes start from "/api"
 
     app.get('/', (req, res) => {
-        res.send("Hitting prod")
+        res.send("Production Service...")
     })
     
 
