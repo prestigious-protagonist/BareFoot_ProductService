@@ -26,10 +26,10 @@ const startServer = () => {
     })
     
 
-    app.listen(PORT, () => {
-        console.log("On PORT : "+PORT);
-    })
+   
     
 }
 
 startServer();
+const serverless = require("serverless-http");
+module.exports = serverless(app);
