@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
 })
 
 
-   
-   
-const serverless = require("serverless-http");
-module.exports = serverless(app);
+app.listen(PORT, () => {
+    console.log("On PORT : "+PORT);
+})
