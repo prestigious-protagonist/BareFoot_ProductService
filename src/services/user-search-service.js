@@ -120,7 +120,7 @@ class SearchService {
           
         
             const getFavourites = await this.SearchRepository.getFavourites(data, options)
-            if(!getFavourites || getFavourites.length == 0) {
+            if(!getFavourites ) {
                 throw new ClientError({
                     success: false,
                     name: "Resource Empty",

@@ -5,10 +5,11 @@ const {sequelize} = require("../models/index");
 
 const Redis = require("ioredis");
 const ClientError = require("../utils/errorHandlers/ClientError");
+const { REDIS_HOST, REDIS_PORT, REDIS_PASS } = require("../config/server-config");
 const redis = new Redis({
-    host:"redis-14256.c252.ap-southeast-1-1.ec2.redns.redis-cloud.com",
-     port:14256,
-     password: "2KWysJA3Bpmzhwvk2rSL5fHZ41QVdfZ3"
+    host: REDIS_HOST,
+     port: REDIS_PORT,
+     password: REDIS_PASS
  })
  redis.on("connect", () => {
      console.log("Redis Connected")

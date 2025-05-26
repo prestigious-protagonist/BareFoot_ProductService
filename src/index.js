@@ -16,9 +16,9 @@ app.use(
 const startServer = () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
-    app.use(cors({
-        origin: 'http://localhost:5173'
-    }))
+    // app.use(cors({
+    //     origin: 'http://localhost:5173'
+    // }))
     app.use("/productService/api", apiv1Router); // All routes start from "/api"
 
     app.get('/', (req, res) => {
