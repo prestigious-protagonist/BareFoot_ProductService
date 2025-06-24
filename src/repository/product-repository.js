@@ -112,6 +112,44 @@ class ProductRepository {
             throw error;
         }
     }
+
+    async ImageExists({variantsId, shoeId}, options) {
+        try {
+            const image = await shoeImages.findAll({
+                variantsId,
+                shoeId
+            }, options)
+            return image;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async removeImage({variantsId, shoeId}, options) {
+        try {
+            const image = await shoeImages.destroy({
+                where:{
+                    variantsId,
+                    shoeId
+
+                }
+            }, options)
+            return image;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getVariants(shoeId, options) {
+        try {
+            const shoeVariantList = await shoeVariants.findAll({
+                where:{
+                    shoeId,
+                }
+            }, options)
+            return shoeVariantList;
+        } catch (error) {
+            throw error;
+        }
+    }
     
     
     

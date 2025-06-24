@@ -238,7 +238,14 @@ class ProductService {
     async uploadImage(data, options) {
         try {
            
-            
+            // img for this variant already exists then remove that
+            const exists = await this.ProductRepository.ImageExists(data, options)
+            console.log(exists.length)
+            if(exists.length>0) {
+                console.log("deleteing the images")
+                // then remove it
+                const deleteCount = await this.ProductRepository.removeImage(data, options) 
+            }
             const img = await this.ProductRepository.uploadImage(data, options)
             if (!img) {
                 throw new ClientError({
@@ -249,6 +256,25 @@ class ProductService {
                 });
             }
             return img;
+        } catch (error) {
+            
+            throw error;
+        }
+    }
+    async getVariants(data, options) {
+        try {
+           
+            
+            const variants = await this.ProductRepository.getVariants(data, options)
+            if (!variants) {
+                throw new ClientError({
+                    statusCode: 500,
+                    name: "ResouruceEmpty",
+                    message: "Failed to fetch variants",
+                    explanation: `An error occurred while attempting to fetch variants.`
+                });
+            }
+            return variants;
         } catch (error) {
             
             throw error;

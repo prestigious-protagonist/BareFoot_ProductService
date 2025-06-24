@@ -219,6 +219,38 @@ const uploadImage = async (req, res) => {
     }
 }
 
+
+
+const getVariants = async (req, res) => {
+    const transaction = await sequelize.transaction();
+    try {
+        console.log(req.params.shoeId)
+        const product = await this.ProductService.getVariants(req.params.shoeId, {transaction});
+        await transaction.commit();
+        res.status(201).json({
+            success: true,
+            status: 201,
+            message: "Successfully fetched the variants",
+            data:[product]
+        })
+    } catch (error) {
+        console.log(error)
+        await transaction.rollback();
+        if(error.err) {
+            res.status(404).json({
+                success: false,
+                status: 404,
+                message: error.err,
+            })
+        }
+        res.status(500).json({
+            success: false,
+            status: 500,
+            message: "Something went wrong"
+        })
+    }
+}
+
 module.exports = {
     create,
     update,
@@ -226,5 +258,6 @@ module.exports = {
     removeProduct,
     addSize,
     removeSize,
-    uploadImage
+    uploadImage,
+    getVariants
 }
