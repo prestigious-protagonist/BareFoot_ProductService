@@ -199,6 +199,43 @@ class SearchRepository {
             throw error;
         }
     }
+
+    async checkStock(data, options) {
+        try {
+            const stock = await sizes.findOne({
+                where:{
+                    variantsId: data.variantsId,
+                    size: data.size,
+                }
+            }, options)
+            console.log("SEE")
+            console.log(data)
+            console.log(stock)
+            return stock 
+        } catch (error) {
+            console.log(error);
+            console.log("Error at repository layer.");
+            throw error;
+        }
+    }
+    async updateStock(data, options) {
+        try {
+            const stock = await sizes.findOne({
+                where:{
+                    variantsId: data.variantsId,
+                    size: data.size
+
+                }
+            }, options)
+            stock.stock-=data.orderCount;
+            await stock.save();
+            return true 
+        } catch (error) {
+            console.log(error);
+            console.log("Error at repository layer.");
+            throw error;
+        }
+    }
     
 }
 module.exports = SearchRepository;

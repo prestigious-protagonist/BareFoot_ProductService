@@ -260,6 +260,7 @@ const removeFavourite = async (req, res) => {
 const checkFavourite = async (req, res) => {
     const t = await sequelize.transaction()
     try {
+        console.log("CAME HERE")
         const data ={
             userId: req.headers["x-user-id"],
             productId: req.params.id
@@ -291,6 +292,40 @@ const checkFavourite = async (req, res) => {
     }
 }
 
+
+
+const removeStock = async (req, res) => {
+    const t = await sequelize.transaction()
+    try {
+        const {variantsId, size, orderCount} = req.body;
+        const product = await this.SearchService.removeStock({variantsId, size, orderCount}, {t});
+        res.status(201).json({
+            success: true,
+            status: 200,
+            data: product
+        })
+    } catch (error) {
+        
+        await t.rollback()
+        
+        if (error instanceof ClientError) {
+            console.log("error dekhle")
+            return res.status(error.statusCode).json({
+                name: error.name,
+                status: error.statusCode,
+                success: false,
+                message: error.message,
+                explanation: error.explanation,
+            });
+        }
+        res.status(500).json({
+            success: false,
+            status: 500,
+            message: "Something went wrong"
+        })
+    }
+}
+
 module.exports = {
     getAll,
     getByBrand,
@@ -299,5 +334,6 @@ module.exports = {
     addToFavourites,
     getFavourites,
     removeFavourite,
-    checkFavourite
+    checkFavourite,
+    removeStock
 }

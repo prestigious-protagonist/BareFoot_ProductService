@@ -23,4 +23,19 @@ router.get('/search', SearchController.getByBrand)
 router.get('/', (req, res)=> {
     res.send("YBE")
 })
+
+router.patch('/decreaseSize', SearchController.removeStock)
+
+router.use((err, req, res, next) => {
+    res.status(err.status || 500).json({
+        name: err.name,
+        success: false,
+        message: err.message || "Internal Server Error",
+        explanation: err.explanation,
+
+    });
+});
+
+
+
 module.exports = router;

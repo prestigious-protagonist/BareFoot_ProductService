@@ -173,6 +173,40 @@ class SearchService {
             throw error
         }
     }
+
+    
+
+    async removeStock(data, options) {
+        try {
+          
+        
+            const stock = await this.SearchRepository.checkStock(data, options)
+            console.log("STOCK DATA : "+stock.size)
+
+            if(stock?.stock == 0) {
+                throw new ClientError({
+                    success: false,
+                    name: "Error",
+                    message: "Out of Stock.",
+                    explanation: ""
+                })
+            }else if(stock?.stock - data.orderCount < 0) {
+                throw new ClientError({
+                    success: false,
+                    name: "Error",
+                    message: "Stock not enough.",
+                    explanation: ""
+                })
+            }
+            //update stock
+            const updateStock = await this.SearchRepository.updateStock(data, options);
+            return updateStock
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+
     
 }
 
